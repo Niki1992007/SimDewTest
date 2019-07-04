@@ -1,7 +1,7 @@
 <?php
 // заголовки запроса
 header("Access-Control-Allow-Origin: *"); // файл может быть прочитан кем угодно
-header("Content-Type: application/json; charset=UTF-8"); // вернуть данные в формате JSON
+header("Content-Type: application/json; charset=UTF-8"); // данные в формате JSON
 
 // включить базу данных и объектные файлы
 include_once '../config/database.php';
