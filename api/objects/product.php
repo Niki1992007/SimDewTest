@@ -52,7 +52,7 @@ class Product
 
         // запрос на вставку записи
         $query = "INSERT INTO
-                " . $this->table_name . "
+                " . $this->table_name . " 
             SET
                 name=:name, price=:price, description=:description, category_id=:category_id, created=:created";
 

@@ -1,4 +1,5 @@
 <?php
+
 // required headers
 header("Access-Control-Allow-Origin: *"); // файл может быть прочитан кем угодно
 header("Content-Type: application/json; charset=UTF-8"); // данные в формате JSON
@@ -18,6 +19,7 @@ $db = $database->getConnection();
 
 // Создать объект класса продкут
 $product = new Product($db);
+
 
 // Получить данные из потока (чё за потоки, блин...) и преобразовать
 $data = json_decode(file_get_contents("php://input"));
@@ -44,7 +46,7 @@ if (
         http_response_code(201);
 
         // вывести пользователю
-        echo json_encode(array("message" => "Продукт успешно создан"));
+        echo json_encode(array("message" => "Продукт успешно создан"), JSON_UNESCAPED_UNICODE);
     } // если не удается создать продукт, сообщить пользователю
     else {
 
@@ -52,7 +54,7 @@ if (
         http_response_code(503);
 
         // вывести пользователю
-        echo json_encode(array("message" => "Не удалось создать продукт"));
+        echo json_encode(array("message" => "Не удалось создать продукт"),JSON_UNESCAPED_UNICODE);
     }
 } // если данные пользователя неполны
 else {
@@ -61,6 +63,6 @@ else {
     http_response_code(400);
 
     // вывести пользователю
-    echo json_encode(array("message" => "Невозможно создать продукт. Данные неполные"));
+    echo json_encode(array("message" => "Невозможно создать продукт. Данные неполные"), JSON_UNESCAPED_UNICODE);
 }
 ?>

@@ -59,6 +59,6 @@ if($num>0){
 
     // также сообщаем об этом в JSON
     echo json_encode(
-        array("message" => "Продукты не найдены!")
+        array("message" => "Продукты не найдены!"), JSON_UNESCAPED_UNICODE
     );
 }
