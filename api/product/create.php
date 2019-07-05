@@ -4,7 +4,7 @@
 // required headers
 header("Access-Control-Allow-Origin: *"); // файл может быть прочитан кем угодно
 header("Content-Type: application/json; charset=UTF-8"); // данные в формате JSON
-header("Access-Control-Allow-Methods: GET, POST"); // для CORS, ограничить методы при отправке заголовка
+header("Access-Control-Allow-Methods: POST"); // для CORS, ограничить методы при отправке заголовка
 header("Access-Control-Max-Age: 3600"); // время на которое кешируется предзапрос
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
