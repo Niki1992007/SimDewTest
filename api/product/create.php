@@ -1,5 +1,6 @@
 <?php
 
+
 // required headers
 header("Access-Control-Allow-Origin: *"); // файл может быть прочитан кем угодно
 header("Content-Type: application/json; charset=UTF-8"); // данные в формате JSON

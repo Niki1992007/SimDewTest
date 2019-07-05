@@ -81,4 +81,42 @@ class Product
         return false;
 
     }
+
+
+    function readOne()
+    {
+
+        // запрос на чтение одной записи
+        $query = "SELECT
+                c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+            FROM
+                " . $this->table_name . " p
+                LEFT JOIN
+                    categories c
+                        ON p.category_id = c.id
+            WHERE
+                p.id = ?
+            LIMIT
+                0,1";
+
+
+        // подготовить оператор запроса
+        $stmt = $this->conn->prepare($query);
+
+        // Привязывает параметр запроса к переменной
+        $stmt->bindParam(1, $this->id); // https://www.php.net/manual/ru/pdostatement.bindparam.php
+
+        // выполнить запрос
+        $stmt->execute();
+
+        //получить извлеченную строку
+        $row = $stmt->fetch(PDO::FETCH_ASSOC); // https://www.php.net/manual/ru/pdostatement.fetch.php
+
+        // установить занчения в свойства объекта
+        $this->name = $row['name'];
+        $this->price = $row['price'];
+        $this->description = $row['description'];
+        $this->category_id = $row['category_id'];
+        $this->category_name = $row['category_name'];
+    }
 }
