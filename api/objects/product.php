@@ -1,4 +1,7 @@
 <?php
+/*
+ *  Метод контструкт и свойства класса продукт
+ */
 
 class Product
 {
@@ -46,44 +49,10 @@ class Product
         return $stmt;
     }
 
-    // Метод создать продукт
-    function create()
-    {
-
-        // запрос на вставку записи
-        $query = "INSERT INTO
-                " . $this->table_name . " 
-            SET
-                name=:name, price=:price, description=:description, category_id=:category_id, created=:created";
-
-        //  Подготавливает запрос к выполнению и возвращает связанный с этим запросом объект
-        $stmt = $this->conn->prepare($query);
-
-        // убрать лишнее
-        $this->name = htmlspecialchars(strip_tags($this->name));
-        $this->price = htmlspecialchars(strip_tags($this->price));
-        $this->description = htmlspecialchars(strip_tags($this->description));
-        $this->category_id = htmlspecialchars(strip_tags($this->category_id));
-        $this->created = htmlspecialchars(strip_tags($this->created));
-
-        // связать значения
-        $stmt->bindParam(":name", $this->name);
-        $stmt->bindParam(":price", $this->price);
-        $stmt->bindParam(":description", $this->description);
-        $stmt->bindParam(":category_id", $this->category_id);
-        $stmt->bindParam(":created", $this->created);
-
-        // Запускает подготовленный запрос на выполнение
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
-
-    }
 
     // Вывести один продукт
-    function readOne() {
+    function readOne()
+    {
 
         // запрос на чтение одной записи
         $query = "SELECT
@@ -119,63 +88,10 @@ class Product
         $this->category_name = $row['category_name'];
     }
 
-    // Обновить продукт
-    function update(){
-
-        // запрос на обновление
-        $query = "UPDATE
-                " . $this->table_name . "
-            SET
-                name = :name,
-                price = :price,
-                description = :description,
-                category_id = :category_id
-            WHERE
-                id = :id";
-
-        $stmt = $this->conn->prepare($query);
-
-        $this->name=htmlspecialchars(strip_tags($this->name));
-        $this->price=htmlspecialchars(strip_tags($this->price));
-        $this->description=htmlspecialchars(strip_tags($this->description));
-        $this->category_id=htmlspecialchars(strip_tags($this->category_id));
-        $this->id=htmlspecialchars(strip_tags($this->id));
-
-        $stmt->bindParam(':name', $this->name);
-        $stmt->bindParam(':price', $this->price);
-        $stmt->bindParam(':description', $this->description);
-        $stmt->bindParam(':category_id', $this->category_id);
-        $stmt->bindParam(':id', $this->id);
-
-        if($stmt->execute()){
-            return true;
-        }
-
-        return false;
-    }
-
-    // Удалить продукт
-    function delete() {
-
-        // запрос по ID
-        $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
-
-        $stmt = $this->conn->prepare($query);
-
-        $this->id=htmlspecialchars(strip_tags($this->id));
-
-        $stmt->bindParam(1, $this->id);
-
-        if($stmt->execute()){
-            return true;
-        }
-
-        return false;
-
-    }
 
     // поиск продукта по параметрам
-    function search($keywords){
+    function search($keywords)
+    {
 
         // выбрать всё
         $query = "SELECT
@@ -192,7 +108,7 @@ class Product
 
         $stmt = $this->conn->prepare($query);
 
-        $keywords=htmlspecialchars(strip_tags($keywords));
+        $keywords = htmlspecialchars(strip_tags($keywords));
         $keywords = "%{$keywords}%"; // Эернаирование значений ключевых слов (что-то с безопасностью)
 
         $stmt->bindParam(1, $keywords);
@@ -205,7 +121,8 @@ class Product
     }
 
     // вывести продукты с пагинацией
-    public function readPaging($from_record_num, $records_per_page){
+    public function readPaging($from_record_num, $records_per_page)
+    {
 
         $query = "SELECT
                 c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
@@ -218,7 +135,7 @@ class Product
             LIMIT ?, ?";
 
 
-        $stmt = $this->conn->prepare( $query );
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(1, $from_record_num, PDO::PARAM_INT);
         $stmt->bindParam(2, $records_per_page, PDO::PARAM_INT);
@@ -229,10 +146,11 @@ class Product
     }
 
     // посчитать пагинацию
-    public function count(){
+    public function count()
+    {
         $query = "SELECT COUNT(*) as total_rows FROM " . $this->table_name . " ";
 
-        $stmt = $this->conn->prepare( $query );
+        $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
