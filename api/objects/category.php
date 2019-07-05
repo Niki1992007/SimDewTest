@@ -47,5 +47,6 @@ class Category{
 
         return $stmt;
     }
+
 }
 ?>
