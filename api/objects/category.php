@@ -30,5 +30,22 @@ class Category{
 
         return $stmt;
     }
+
+    // вывести все категории
+    public function read(){
+
+        // выборка
+        $query = "SELECT
+                id, name, description
+            FROM
+                " . $this->table_name . "
+            ORDER BY
+                name";
+
+        $stmt = $this->conn->prepare( $query );
+        $stmt->execute();
+
+        return $stmt;
+    }
 }
 ?>
