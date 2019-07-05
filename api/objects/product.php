@@ -22,7 +22,7 @@ class Product
         $this->conn = $db;
     }
 
-    // Метод прочитать продукт
+    // Метод вывести продукт
     function read()
     {
 

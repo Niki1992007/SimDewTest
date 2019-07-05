@@ -20,11 +20,15 @@ $product = new Product($db);
 // Проверить поле на существование и разрешить его читать из GET
 $product->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-// метод достаёт информации об определённом продукте
+// метод достаёт информацию об определённом продукте
 $product->readOne();
+
+
+$products_arr_name["Конкретный продукт"] = array();
 
 // Если в продукте поле имя не null
 if($product->name!=null){
+
     // создадим массив -> передадим туда значения полей
     $product_arr = array(
         "id" =>  $product->id,
@@ -36,11 +40,13 @@ if($product->name!=null){
 
     );
 
+    array_push($products_arr_name["Конкретный продукт"], $product_arr);
+
     // Если всё нормально
     http_response_code(200);
 
     // преобразовать
-    echo json_encode($product_arr, JSON_PRETTY_PRINT);
+    echo json_encode($products_arr_name, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 }
 
 // иначе
@@ -49,6 +55,6 @@ else{
     http_response_code(404);
 
     // сообщим
-    echo json_encode(array("message" => "Данный товар не существует"),JSON_UNESCAPED_UNICODE);
+    echo json_encode(array("Сообщение" => "Данный товар не существует"),JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 }
 ?>

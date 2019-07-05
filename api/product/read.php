@@ -23,10 +23,9 @@ if($num>0){
 
     // вернуть масиив записей продуктов
     $products_arr=array();
-    $products_arr["records"]=array(); // добавляем ключ для удобства
+    $products_arr["Продукты"]=array(); // добавляем для удобства
 
     // вернуть содержимое таблицы
-    // извлечь содержимое
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
         // извлечь всю строку полностью
@@ -42,23 +41,23 @@ if($num>0){
             "category_name" => $category_name
         );
 
-        array_push($products_arr["records"], $product_item); // сливаем два массива
+        array_push($products_arr["Продукты"], $product_item); // сливаем два массива
     }
 
     // если всё хорошо то код ответа - 200 OK
     http_response_code(200);
 
     // преобразовать в JSON
-    echo json_encode($products_arr, JSON_PRETTY_PRINT);
+    echo json_encode($products_arr, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
-    // если продкуты не найдены
-} else {
+    // если продукты не найдены
+    } else {
 
     // выстовляем статус код - 404 Not found
     http_response_code(404);
 
     // также сообщаем об этом в JSON
     echo json_encode(
-        array("message" => "Продукты не найдены!"), JSON_UNESCAPED_UNICODE
-    );
+        array("Сообщение" => "Продукты не найдены!"), JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT
+);
 }

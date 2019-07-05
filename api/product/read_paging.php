@@ -26,13 +26,10 @@ $num = $stmt->rowCount(); //Возвращает количество строк
 // Еслир записи вообще есть
 if ($num > 0) {
 
-    // массив всех продуктов
     $products_arr = array();
 
-    // массив полученных продуктов
-    $products_arr["Записи"] = array();
+    $products_arr["Продукты"] = array();
 
-    // кол-во продуктов на странице
     $products_arr["Пагинация"] = array();
 
 
@@ -50,7 +47,7 @@ if ($num > 0) {
             "category_name" => $category_name
         );
 
-        array_push($products_arr["Записи"], $product_item); // сольём массивы
+        array_push($products_arr["Продукты"], $product_item); // сольём массивы
     }
 
 

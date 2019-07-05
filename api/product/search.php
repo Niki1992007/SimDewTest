@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-// файл core.php будет содержать информацию о базовой странице, настрйоки вывода ошибок и переменные пагинации
+// файл core.php содержит информацию о базовой странице, настройки вывода ошибок и переменные пагинации
 include_once '../shared/core.php';
 
 // Всё тоже что и в других файлах
@@ -14,7 +14,7 @@ $db = $database->getConnection();
 
 $product = new Product($db);
 
-// указать ключевые слова по которым будет осуществляться поиск
+// Проверит в GET на существование параметр, по которому будет осуществляться поиск, указать где и как он будет передоваться
 $keywords=isset($_GET["s"]) ? $_GET["s"] : "";
 
 // метод поиска
@@ -26,12 +26,12 @@ if($num>0){
 
     // массив продуктов
     $products_arr=array();
-    $products_arr["records"]=array(); // c ключом records
+    $products_arr["Найдены следующие продукты"]=array();
 
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
-        // получить занчения, для конкретного вывода  extract($row['name']);
+        // получить значения, для конкретного вывода: extract($row['name']);
         extract($row);
 
         // передать значения
@@ -44,14 +44,15 @@ if($num>0){
             "category_name" => $category_name
         );
 
-        array_push($products_arr["records"], $product_item); // слить массивы
+        array_push($products_arr["Найдены следующие продукты"], $product_item); // слить массивы
     }
 
     // set response code - 200 OK
     http_response_code(200);
 
     // данные о продукте
-    echo json_encode($products_arr, JSON_PRETTY_PRINT);
+    echo json_encode($products_arr, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT
+);
 
 } else {
 
@@ -60,7 +61,7 @@ if($num>0){
 
 
     echo json_encode(
-        array("message" => "Запрашиваемые продукты не найдены"), JSON_UNESCAPED_UNICODE
-    );
+        array("Сообщение" => "Запрашиваемые продукты не найдены"), JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT
+);
 }
 ?>
