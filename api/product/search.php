@@ -3,7 +3,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // файл core.php будет содержать информацию о базовой странице, настрйоки вывода ошибок и переменные пагинации
-/*include_once '../config/core.php';*/
+include_once '../shared/core.php';
 
 // Всё тоже что и в других файлах
 include_once '../config/database.php';
@@ -19,7 +19,7 @@ $keywords=isset($_GET["s"]) ? $_GET["s"] : "";
 
 // метод поиска
 $stmt = $product->search($keywords);
-$num = $stmt->rowCount(); //Возвращает количество строк, затронутых последним SQL-запросом
+$num = $stmt->rowCount(); // Возвращает количество строк, затронутых последним SQL-запросом
 
 // если записей больше 0
 if($num>0){
